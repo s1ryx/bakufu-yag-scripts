@@ -2,13 +2,11 @@
 
 {{$roleGuest := 1054887006389403791}}
 {{$roleMember := 1049430305938870332}}
+{{$target := .Message.Author}}
+{{$usage := (joinStr "" "Usage:\n" "``" .ServerPrefix .CCTrigger "`` *affiliation*\n" "Choose from:\n" "- ``member``\n" "  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!\n" "- ``guest``\n" "  if you're just looking around or want to become a member in the future!") }}
 
 {{/* end of configurable variables */}}
 
-{{$serverPrefix := .ServerPrefix}}
-{{$ccTrigger := .CCTrigger}}
-{{$target := .Message.Author}}
-{{$usage := (joinStr "" "Usage:\n" "``" $serverPrefix $ccTrigger "`` *affiliation*\n" "Choose from:\n" "- ``member``\n" "  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!\n" "- ``guest``\n" "  if you're just looking around or want to become a member in the future!") }}
 {{try }}
 {{$args := parseArgs 0 "thisWontShow"
     (carg "string" "Guest")
