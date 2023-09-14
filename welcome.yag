@@ -1,4 +1,4 @@
-Hey <@{{.User.ID}}>, welcome to **BAKA BAKUFU**! We hope you enjoy your stay :blush:
+Hey <@{{.User.ID}}>, welcome to **{{.Guild.Name}}**! We hope you enjoy your stay :blush:
 *Please read the rules at https://discord.com/channels/1013119618572898438/1013133432366301254/1145333460572049478 and change your nickname to a recognizable one from XIV using ``/nick``*
 If nobody is here to verify you, try writing ``-getrole`` in chat.
 For additional roles add reactions to this [>> role menu <<](<https://discord.com/channels/1013119618572898438/1013133432366301254/1150903162081906738>).
