@@ -1,0 +1,40 @@
+{{/* configurable variables */}}
+
+{{$roleGuest := 1054887006389403791}}
+{{$roleMember := 1049430305938870332}}
+
+{{/* end of configurable variables */}}
+
+{{$args := parseArgs 0 "thisWontShow"
+    (carg "string" "Guest")
+    (carg "string" "Members")
+}}
+
+{{$target := .Message.Author}}
+{{if $args.IsSet 0}}
+{{if eq ($args.Get 0) "guest"}}
+{{giveRoleID $target $roleGuest}}
+{{takeRoleID $target $roleMember}}
+**{{$target}}** has been as verified as one of our friends.
+{{else if eq ($args.Get 0) "member"}}
+{{giveRoleID $target.ID $roleMember}}
+{{takeRoleID $target.ID $roleGuest}}
+**{{$target}}** has been verified as a member of the Bakufu.
+{{else}}
+Usage:
+``{{.ServerPrefix}}{{.CCTrigger}}`` *affiliation*
+Choose from:
+- ``member``
+  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!
+- ``guest``
+  if you're just looking around or want to become a member in the future!
+{{end}}
+{{else}}
+Usage:
+``{{.ServerPrefix}}{{.CCTrigger}}`` *affiliation*
+Choose from:
+- ``member``
+  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!
+- ``guest``
+  if you're just looking around or want to become a member in the future!
+{{end}}
