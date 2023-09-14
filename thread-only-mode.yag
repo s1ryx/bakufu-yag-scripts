@@ -1,0 +1,5 @@
+{{if not (or (reFind .LinkRegex .Message.Content) (.Message.Attachments) (.Channel.IsThread) )}}
+    {{print .User.Mention " Only media here! Your message will be deleted in 10 seconds, **copy it NOW** to repost in a thread."}}
+    {{deleteTrigger 10}}
+    {{deleteResponse 9}}
+{{end}}
