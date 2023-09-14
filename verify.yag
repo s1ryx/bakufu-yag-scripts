@@ -1,28 +1,28 @@
 {{/* configurable variables */}}
 
-{{$roleGuest := 1054887006389403791}}
-{{$roleMember := 1049430305938870332}}
-{{$target := .Message.Author}}
-{{$usage := (joinStr "" "Usage:\n" "``" .ServerPrefix .CCTrigger "`` *affiliation*\n" "Choose from:\n" "- ``member``\n" "  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!\n" "- ``guest``\n" "  if you're just looking around or want to become a member in the future!") }}
+{{ $roleGuest := 1054887006389403791 }}
+{{ $roleMember := 1049430305938870332 }}
+{{ $target := .Message.Author }}
+{{ $usage := (print "Usage:\n``" .ServerPrefix .CCTrigger "`` *affiliation*\nChoose from:\n- ``member``\n  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!\n- ``guest``\n  if you're just looking around or want to become a member in the future!") }}
 
 {{/* end of configurable variables */}}
 
-{{try }}
-{{$args := parseArgs 0 "thisWontShow"
-    (carg "string" "Guest")
-    (carg "string" "Members")
-}}
-{{if eq ($args.Get 0) "guest"}}
-{{giveRoleID $target $roleGuest}}
-{{takeRoleID $target $roleMember}}
-**{{$target}}** has been as verified as one of our friends.
-{{else if eq ($args.Get 0) "member"}}
-{{giveRoleID $target.ID $roleMember}}
-{{takeRoleID $target.ID $roleGuest}}
-**{{$target}}** has been verified as a member of the Bakufu.
-{{else}}
-{{$usage}}
-{{end}}
-{{catch}}
-{{$usage}}
-{{end}}
+{{ try }}
+  {{ $args := parseArgs 0 "thisWontShow"
+    ( carg "string" "Guest")
+    ( carg "string" "Members")
+  }}
+  {{ if eq ($args.Get 0) "guest"}}
+    {{ giveRoleID $target $roleGuest}}
+    {{ takeRoleID $target $roleMember}}
+    {{ print "** " $target " ** has been as verified as one of our friends." }}
+  {{ else if eq ( $args.Get 0 ) "member"}}
+    {{ giveRoleID $target.ID $roleMember}}
+    {{ takeRoleID $target.ID $roleGuest}}
+    {{ print "** " $target " ** has been verified as a member of the Bakufu." }}
+  {{ else }}
+    {{ $usage }}
+  {{ end }}
+{{ catch }}
+  {{ $usage }}
+{{ end }}
