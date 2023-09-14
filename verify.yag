@@ -12,13 +12,13 @@
     ( carg "string" "Guest")
     ( carg "string" "Members")
   }}
-  {{ if eq ($args.Get 0) "guest"}}
-    {{ giveRoleID $target $roleGuest}}
-    {{ takeRoleID $target $roleMember}}
+  {{ if eq ($args.Get 0) "guest" }}
+    {{ giveRoleID $target $roleGuest }}
+    {{ takeRoleID $target $roleMember }}
     {{ print "** " $target " ** has been as verified as one of our friends." }}
-  {{ else if eq ( $args.Get 0 ) "member"}}
-    {{ giveRoleID $target.ID $roleMember}}
-    {{ takeRoleID $target.ID $roleGuest}}
+  {{ else if eq ( $args.Get 0 ) "member" }}
+    {{ giveRoleID $target.ID $roleMember }}
+    {{ takeRoleID $target.ID $roleGuest }}
     {{ print "** " $target " ** has been verified as a member of the Bakufu." }}
   {{ else }}
     {{ $usage }}
