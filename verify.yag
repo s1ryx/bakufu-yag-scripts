@@ -15,11 +15,11 @@
   {{ if eq ($args.Get 0) "guest" }}
     {{ giveRoleID $target $roleGuest }}
     {{ takeRoleID $target $roleMember }}
-    {{ print "** " $target " ** has been as verified as one of our friends." }}
+    {{ print "**" $target "** has been as verified as one of our friends." }}
   {{ else if eq ( $args.Get 0 ) "member" }}
     {{ giveRoleID $target.ID $roleMember }}
     {{ takeRoleID $target.ID $roleGuest }}
-    {{ print "** " $target " ** has been verified as a member of the Bakufu." }}
+    {{ print "**" $target "** has been verified as a member of the Bakufu." }}
   {{ else }}
     {{ $usage }}
   {{ end }}
