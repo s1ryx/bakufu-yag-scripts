@@ -5,13 +5,15 @@
 
 {{/* end of configurable variables */}}
 
+{{ $serverPrefix := .ServerPrefix }}
+{{ $ccTrigger := .CCTrigger }}
+{{$target := .Message.Author}}
+{{ $usage := (joinStr "" "Usage:\n" "``" $serverPrefix $ccTrigger "`` *affiliation*\n" "Choose from:\n" "- ``member``\n" "  if you're part of our guild!\n" "- ``guest``\n" "  if you're just looking around or want to become a member in the future!") }}
+{{ try }}
 {{$args := parseArgs 0 "thisWontShow"
     (carg "string" "Guest")
     (carg "string" "Members")
 }}
-
-{{$target := .Message.Author}}
-{{if $args.IsSet 0}}
 {{if eq ($args.Get 0) "guest"}}
 {{giveRoleID $target $roleGuest}}
 {{takeRoleID $target $roleMember}}
@@ -20,21 +22,9 @@
 {{giveRoleID $target.ID $roleMember}}
 {{takeRoleID $target.ID $roleGuest}}
 **{{$target}}** has been verified as a member of the Bakufu.
-{{else}}
-Usage:
-``{{.ServerPrefix}}{{.CCTrigger}}`` *affiliation*
-Choose from:
-- ``member``
-  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!
-- ``guest``
-  if you're just looking around or want to become a member in the future!
-{{end}}
-{{else}}
-Usage:
-``{{.ServerPrefix}}{{.CCTrigger}}`` *affiliation*
-Choose from:
-- ``member``
-  if you're part of our XIV FC [Kisaragi Bakufu](https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/)!
-- ``guest``
-  if you're just looking around or want to become a member in the future!
+{{ else }}
+{{ $usage }}
+{{ end }}
+{{ catch }}
+{{ $usage }}
 {{end}}
