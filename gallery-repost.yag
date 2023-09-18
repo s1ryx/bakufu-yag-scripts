@@ -1,0 +1,8 @@
+{{ if (or ($urls := reFindAll .LinkRegex .Message.Content) (.Message.Attachments) ) }}
+  {{$lenURLs := len $urls }}
+  {{$lenAttm := len .Message.Attachments }}
+  {{if (and (gt ($lenURLs) 0) (gt (len .Message.Attachments) 0))}}
+    {{print (index $urls 0) " " (index .Message.Attachments 0).URL}}
+    {{print $lenURLs "lenURLS" $lenAttm "lenAttm" }}
+  {{end}}
+{{end}}
