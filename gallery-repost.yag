@@ -6,6 +6,7 @@
 	{{ $message := (cslice) }}
 	{{/* start by iterating over attachments */}}
 	{{ range .Message.Attachments }}
+		{{/* filter by file extension, so only embeds that would get a thumbnail generated are appended */}}
 		{{if (reFind `(?i)\.(png|jpe?g|webp|svg|webm|mp4)\z` .Filename) }}
 			{{ $message = $message.Append (cembed "image" (sdict "url" .ProxyURL )) }}
 		{{ end }}
@@ -14,6 +15,8 @@
 	{{ range $urls }}
 		{{ $message = $message.Append (cembed "image" (sdict "url" . )) }}
 	{{ end }}
-	{{/* send message with all constructed embeds */}}
-	{{ sendMessage $channel (complexMessage "embed" $message ) }}
+	{{/* send message with all constructed embeds when there is at least one element to append*/}}
+	{{ if (gt (len $message) 0 ) }}
+		{{ sendMessage $channel (complexMessage "embed" $message ) }}
+	{{ end }}
 {{ end }}
