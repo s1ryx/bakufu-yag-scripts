@@ -1,9 +1,10 @@
 {{ $channel := 1156409542272356472 }}
-{{ if (or ($urls := reFindAll `(?i)([a-z\d]+://)([\w_-]+(?:(?:\.[\w_-]+)+))((/[\w.,@^=%&:/~+#-]*\.(png|jpe?g|svg|mp4)){1}[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]*)` .Message.Content) (.Message.Attachments))}}
+{{ if (or ($urls := reFindAll `(?i)([a-z\d]+://)([\w_-]+(?:(?:\.[\w_-]+)+):?[\d]*)((/[\w.,@^=%&:/~+#-]*\.(png|jpe?g|webp|svg|webm|mp4)){1}[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]*)` .Message.Content) (.Message.Attachments))}}
 {{ $message := (cslice) }}
 {{ range $urls }}{{ $message = $message.Append (cembed "image" (sdict "url" . ))}}
 {{ end }}
-{{ range .Message.Attachments }}{{ $message = $message.Append (cembed "image" (sdict "url" .ProxyURL )) }}
+{{ range .Message.Attachments }}{{if (reFind `(?i)\.(png|jpe?g|webp|svg|webm|mp4)\z` .Filename)}}{{ $message = $message.Append (cembed "image" (sdict "url" .ProxyURL )) }}
+{{ end }}
 {{ end }}
 {{ sendMessage $channel (complexMessage "embed" $message ) }}
 {{ end }}
