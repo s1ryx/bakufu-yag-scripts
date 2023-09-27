@@ -1,8 +1,12 @@
 {{ if (or ($urls := reFindAll .LinkRegex .Message.Content) (.Message.Attachments))}}
-{{ $lenURLs := len $urls }}
-{{ $lenAttm := len .Message.Attachments }}
-{{ if (and (gt ($lenURLs) 0) (gt (len .Message.Attachments) 0) ) }}
+{{ if (or (gt (len $urls) 0) (gt (len .Message.Attachments) 0) ) }}
+{{ if gt (len $urls) 0 }}
+{{ range $urls }}{{ . }}
+{{ end }}
+{{ end }}
+{{ if gt (len .Message.Attachments) 0 }}
 {{ range .Message.Attachments }}{{ .ProxyURL }}
-{{ end }}{{ range $urls }}{{ . }}{{ end }}
+{{ end }}
+{{ end }}
 {{ end }}
 {{ end }}
