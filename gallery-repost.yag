@@ -1,8 +1,9 @@
-{{ if (or ($urls := reFindAll .LinkRegex .Message.Content) (.Message.Attachments))}}
+{{ $channel := 1156409542272356472 }}
+{{ if (or ($urls := reFindAll `(?i)([a-z\d]+://)([\w_-]+(?:(?:\.[\w_-]+)+))((/[\w.,@^=%&:/~+#-]*\.(png|jpe?g|svg|mp4)){1}[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]*)` .Message.Content) (.Message.Attachments))}}
 {{ $message := (cslice) }}
 {{ range $urls }}{{ $message = $message.Append (cembed "image" (sdict "url" . ))}}
 {{ end }}
 {{ range .Message.Attachments }}{{ $message = $message.Append (cembed "image" (sdict "url" .ProxyURL )) }}
 {{ end }}
-{{ sendMessage nil (complexMessage "embed" $message ) }}
+{{ sendMessage $channel (complexMessage "embed" $message ) }}
 {{ end }}
