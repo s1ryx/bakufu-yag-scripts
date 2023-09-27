@@ -1,10 +1,8 @@
 {{ if (or ($urls := reFindAll .LinkRegex .Message.Content) (.Message.Attachments))}}
-{{ if gt (len $urls) 0 }}
-{{ range $urls }}{{ . }}
+{{ $message := (cslice) }}
+{{ range $urls }}{{ $message = $message.Append (cembed "image" (sdict "url" . ))}}
 {{ end }}
+{{ range .Message.Attachments }}{{ $message = $message.Append (cembed "image" (sdict "url" .ProxyURL )) }}
 {{ end }}
-{{ if gt (len .Message.Attachments) 0 }}
-{{ range .Message.Attachments }}{{ .ProxyURL }}
-{{ end }}
-{{ end }}
+{{ sendMessage nil (complexMessage "embed" $message ) }}
 {{ end }}
