@@ -2,16 +2,14 @@
 {{ $channel := 1156409542272356472 }}
 {{/* check for valid URLs containing an image in message body or if the post has attachments */}}
 {{ if (or ($urls := reFindAll `(?i)([a-z\d]+://)([\w_-]+(?:(?:\.[\w_-]+)+)(:[1-9][0-9]{0,3}|:[1-5][0-9]{4}|:6[0-4][0-9]{3}|:65[0-4][0-9]{2}|:655[0-2][0-9]|:6553[0-5])?)((/[\w.,@^=%&:/~+#-]*\.(png|jpe?g|webp|svg|webm|mp4)){1}[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]*)` .Message.Content) (.Message.Attachments)) }}
-	{{/* default, empty cslice to be appended onto */}}
-	{{ $message := (cslice) }}
-	{{/* start by iterating over attachments */}}
+	{{/* start by iterating over attachments and send a message for each matching URL found */}}
 	{{ range .Message.Attachments }}
-		{{/* filter by file extension, so only embeds that would get a thumbnail generated are appended */}}
+		{{/* filter embed array by file extension, so only embeds that would get a thumbnail generated are appended */}}
 		{{if (reFind `(?i)\.(png|jpe?g|webp|svg|webm|mp4)\z` .Filename) }}
 			{{ sendMessage $channel .URL }}
 		{{ end }}
 	{{ end }}
-	{{/* afterwards, add all valid image URLs as embeds too */}}
+	{{/* afterwards, post all valid media URLs inside the message as one each */}}
 	{{ range $urls }}
 		{{ sendMessage $channel . }}
 	{{ end }}
