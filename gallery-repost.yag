@@ -1,16 +1,16 @@
+{{/* define channel for gallery */}}
 {{ $channel := 1156409542272356472 }}
-{{/* check for valid URLs containing an image in message body or if the post has attachments */}}
+{{/* check for valid URLs containing media in message body or if the message has attachments */}}
 {{ if (or ($urls := reFindAll `(?i)([a-z\d]+://)([\w_-]+(?:(?:\.[\w_-]+)+)(:[1-9][0-9]{0,3}|:[1-5][0-9]{4}|:6[0-4][0-9]{3}|:65[0-4][0-9]{2}|:655[0-2][0-9]|:6553[0-5])?)((/[\w.,@^=%&:/~+#-]*\.(png|jpe?g|webp|svg|webm|mp4)){1}[\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-]*)` .Message.Content) (.Message.Attachments)) }}
-	{{/* start by iterating over attachments and send a message for each matching URL found */}}
 	{{ range .Message.Attachments }}
-		{{/* filter embed array by file extension, so only embeds that would get a thumbnail generated are appended */}}
+		{{/* filter embed array by file extension, and repost attachment URL if the extension matches a filetype that would produce an embed */}}
 		{{if (reFind `(?i)\.(png|jpe?g|webp|svg)\z` .Filename) }}
 			{{ sendMessage $channel .URL }}
 		{{else if (reFind `(?i)\.(webm|mp4)` .Filename) }}
 			{{ sendMessage $channel (joinStr "" "[original](" .URL ")") }}
 		{{ end }}
 	{{ end }}
-	{{/* afterwards, post all valid media URLs inside the message as one each */}}
+	{{/* filter URL array by file extension, and repost media URL if the extension matches a filetype that would produce an embed */}}
 	{{ range $urls }}
 		{{if (reFind `(.*)\.(png|jpe?g|webp|svg).*` .) }}
 			{{ sendMessage $channel . }}
