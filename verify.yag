@@ -14,11 +14,11 @@
   {{ if eq ($args.Get 0) "guest" }}
     {{ giveRoleID .Message.Author $roleGuest }}
     {{ takeRoleID .Message.Author $roleMember }}
-    {{ print .Message.Author.Mention " has been as verified as one of our friends." }}
+    {{ print "**``" .Message.Author "``** has been as verified as one of our friends." }}
   {{ else if eq ( $args.Get 0 ) "member" }}
     {{ giveRoleID .Message.Author.ID $roleMember }}
     {{ takeRoleID .Message.Author.ID $roleGuest }}
-    {{ print .Message.Author.Mention " has been verified as a member of the Bakufu." }}
+    {{ print "**``" .Message.Author "``** has been verified as a member of the Bakufu." }}
   {{ else }}
     {{ $usage }}
   {{ end }}
