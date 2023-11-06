@@ -1,0 +1,3 @@
+{{ if (hasRoleID 1054887006389403791) }}
+    {{ sendMessage 1027169736435433552 (joinStr "" "User " .User.Mention " (ID: " .User.ID ") has guest role since one week.") }}
+{{ end }}
