@@ -1,0 +1,5 @@
+{{ $roleGuest := 1054887006389403791 }}
+{{ $roleMember := 1049430305938870332 }}
+{{ if not (or (hasRoleID $roleGuest) (hasRoleID $roleMember)) }}
+    {{$silent := exec "kick" .User.ID "Failed to verify within one hour. If you're not a bot, please join back and complete verification!" }}
+{{ end }}
