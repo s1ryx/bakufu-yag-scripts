@@ -1,6 +1,6 @@
 {{ $roleGuest := 1054887006389403791 }}
 {{ $roleFriends := 1171054594412007494 }}
 {{ $roleMember := 1049430305938870332 }}
-{{ if not (or (hasRoleID $roleMember) (hasRoleID $roleFriends)) (hasRoleID $roleGuest) }}
+{{ if not (or (hasRoleID $roleMember) (hasRoleID $roleFriends) (hasRoleID $roleGuest)) }}
     {{$silent := exec "kick" .User.ID "Failed to verify within one hour. If you're not a bot, please join back and complete verification!" }}
 {{ end }}
