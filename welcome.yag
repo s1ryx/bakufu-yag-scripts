@@ -1,4 +1,5 @@
 Hey <@{{.User.ID}}>, welcome to **{{.Guild.Name}}**! We hope you enjoy your stay :blush:
 *Please read the rules at https://discord.com/channels/1013119618572898438/1013133432366301254/1145333460572049478 and change your nickname to a recognizable one from XIV using ``/nick``*
-If nobody is here to verify you, try writing ``-getrole`` in chat.
+If nobody is here to verify you, try writing ``-getrole`` in chat. Failing to get verified within one hour will result in an automated kick.
 For additional roles add reactions to this [>> role menu <<](<https://discord.com/channels/1013119618572898438/1013133432366301254/1150903162081906738>).
+{{ scheduleUniqueCC 12 1013125559284412466 3600 (joinStr "" "lurkcheck" .User.ID) . }}
