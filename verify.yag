@@ -2,7 +2,7 @@
 
 {{ $roleGuest := 1054887006389403791 }}
 {{ $roleMember := 1049430305938870332 }}
-{{ $usage := (print "Usage:\n``" .ServerPrefix .CCTrigger "`` *affiliation*\nChoose from:\n- ``member``\n  if you're already a member of our XIV FC [Kisaragi Bakufu](<https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/>)!\n- ``guest``\n  if you're just looking around or want to become a member in the future!\n**Please note**: Guests are expected to either apply for membership or ask for friends role after a certain time period.") }}
+{{ $usage := (print "Usage:\n``" .ServerPrefix .CCTrigger "`` *guest* | *member*\nChoose from:\n- ``guest``\n  if you're just looking around or want to become a member in the future!\n- ``member``\n  if you're already a member of our XIV FC [Kisaragi Bakufu](<https://eu.finalfantasyxiv.com/lodestone/freecompany/9280089244661973045/>)!\n**Please note**: Guests are expected to either apply for membership or ask for friends role after a certain time period.") }}
 
 {{/* end of configurable variables */}}
 
