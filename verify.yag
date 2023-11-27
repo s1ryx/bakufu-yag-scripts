@@ -11,12 +11,12 @@
     ( carg "string" "Guest")
     ( carg "string" "Members")
   }}
-  {{ if eq ($args.Get 0) "guest" }}
+  {{ if eq (lower ($args.Get 0)) "guest" }}
     {{ giveRoleID .Message.Author $roleGuest }}
     {{ takeRoleID .Message.Author $roleMember }}
     {{ print "**`" .Message.Author "`** has been as verified as one of our guests." }}
     {{ scheduleUniqueCC 13 1013125559284412466 604800 (joinStr "" "guestcheck" .User.ID) . }}
-  {{ else if eq ( $args.Get 0 ) "member" }}
+  {{ else if eq (lower ( $args.Get 0 )) "member" }}
     {{ giveRoleID .Message.Author.ID $roleMember }}
     {{ takeRoleID .Message.Author.ID $roleGuest }}
     {{ print "**`" .Message.Author "`** has been verified as a member of the Bakufu." }}
