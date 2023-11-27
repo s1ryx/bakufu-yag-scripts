@@ -20,6 +20,10 @@
     {{ giveRoleID .Message.Author.ID $roleMember }}
     {{ takeRoleID .Message.Author.ID $roleGuest }}
     {{ print "**`" .Message.Author "`** has been verified as a member of the Bakufu." }}
+    {{ try }}
+      {{ cancelScheduledUniqueCC 13 (joinStr "" "guestcheck" .User.ID) }}
+    {{ catch }}
+    {{ end }}
   {{ else }}
     {{ $usage }}
   {{ end }}
