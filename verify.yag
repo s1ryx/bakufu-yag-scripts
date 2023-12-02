@@ -6,11 +6,8 @@
 
 {{/* end of configurable variables */}}
 
-{{ try }}
-  {{ $args := parseArgs 0 "thisWontShow"
-    ( carg "string" "Guest")
-    ( carg "string" "Members")
-  }}
+{{ $args := parseArgs 0 "" ( carg "string" "affiliation") }}
+{{ if $args.IsSet 0}}
   {{ if eq (lower ($args.Get 0)) "guest" }}
     {{ giveRoleID .Message.Author $roleGuest }}
     {{ takeRoleID .Message.Author $roleMember }}
@@ -23,10 +20,10 @@
     {{ try }}
       {{ cancelScheduledUniqueCC 13 (joinStr "" "guestcheck" .User.ID) }}
     {{ catch }}
-    {{ end }}
+	{{ end }}
   {{ else }}
     {{ $usage }}
   {{ end }}
-{{ catch }}
-  {{ $usage }}
+{{ else }}
+    {{ $usage }}
 {{ end }}
